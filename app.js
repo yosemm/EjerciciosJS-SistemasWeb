@@ -37,3 +37,41 @@ function renderizarPerfil(perfil) {
     ciudad.textContent = perfil.ciudad;
     avatar.setAttribute("src", perfil.avatar);
 }
+
+async function cargarUsuario() {
+    let user;
+    let number = Math.floor(Math.random() * 4);
+    let mensaje = document.querySelector("#mensaje");
+    switch (number) {
+        case 0:
+            user = "torvalds";
+            break;
+        case 1:
+            user = "gaearon";
+            break;
+        case 2:
+            user = "yyx990803";
+            break;
+        case 3:
+            user = "tj";
+            break;
+    }
+    let userLink = `https://api.github.com/users/${user}`;
+    mensaje.textContent = "Cargando...";
+    try {
+        const response = await fetch(userLink);
+        if (!response.ok) {
+            throw new Error(`Estado de la respuesta: ${response.status}`);
+        }
+        const result = await response.json();
+        let perfil = construirPerfil(result);
+        renderizarPerfil(perfil);
+        mostrarEtiquetas(habilidades);
+        mensaje.textContent = "";
+    } catch (error) {
+        console.error(error.message);
+        mensaje.textContent = "Error al cargar usuario";
+    }
+}
+
+document.querySelector("#btn").addEventListener("click", cargarUsuario);

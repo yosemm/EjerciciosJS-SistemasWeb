@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+
+body {
+    font-family: "Google Sans", sans-serif;
+}
+
 #block-botones {
     margin: 0 auto;
     display: flex;
@@ -8,10 +14,76 @@
 }
 
 #block-botones button {
-    width: 25%;
+    width: 28%;
     height: 10vh;
+    background-image: url("https://cdn.wallpapersafari.com/31/99/VWh3CL.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 1rem;
+    background-blend-mode: lighten;
+    font-family: "Google Sans", sans-serif;
+    font-weight: 500;
+    font-size: 1.0rem;
+    border: none;
+}
+
+#block-botones button:hover {
+    background-color: mistyrose;
+    transition: background-color 120ms ease;
 }
 
 h2 {
     text-align: center;
+    color: darkslategray;
+}
+
+#informacion {
+    display: flex;
+    background-color: whitesmoke;
+    border-radius: 5rem 5rem 0 0;
+    width: 31vw;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+#informacion img {
+    display: block;
+    background-color: white;
+    border-radius: 3rem;
+}
+
+#informacion p {
+    display: flex;
+    justify-content: center;
+}
+
+#informacion ol {
+    font-weight: bold;
+    color: darkslategray;
+}
+
+#informacion ol li {
+    font-weight: normal;
+    color: black;
+}
+
+#status {
+    text-align: center;
+    margin: 1rem auto;
+}
+
+@media screen and (max-width: 1000px) {
+    #block-botones {
+        width: 80%;
+    }
+
+    #block-botones button {
+        width:
+            45%;
+        height: 15vh;
+    }
+
+    #informacion {
+        width: 71vw;
+    }
 }

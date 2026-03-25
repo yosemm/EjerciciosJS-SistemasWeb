@@ -173,6 +173,11 @@ function addText(type, resource) {
         case 3:
         case 2: {
             listado.textContent = "Detalles del Pokémon:";
+            const pokeImg = document.createElement("img");
+            pokeImg.src = resource.sprites.front_default;
+            const pokeImgContainer = document.createElement("p");
+            pokeImgContainer.appendChild(pokeImg);
+            listado.appendChild(pokeImgContainer);
             // 1. ID
             const idElement = document.createElement("li");
             idElement.textContent = "ID: " + resource.id;

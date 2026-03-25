@@ -40,7 +40,7 @@ const requestsPokemon = (() => {
     // Boton3
     const busquedaPorNombre = () => {
         divStatus.textContent = "Loading...";
-        let pokemonName = prompt("Ingresa el nombre de un Pokemon:", "Piplup");
+        let pokemonName = prompt("Ingresa el nombre completo de un Pokemon:", "Roserade");
         if (pokemonName && pokemonName.trim() !== "") {
             pokemonName = pokemonName.trim().toLowerCase();
             fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`, requestOptions)
@@ -166,49 +166,64 @@ function mapArrayElement(element, title) {
     return element.map(e => e[title].name);
 }
 
-function addText(type, pokemon) {
+function addText(type, resource) {
     clearText();
     const listado = document.createElement("ol");
     switch (type) {
+        case 3:
+        case 2: {
+            listado.textContent = "Detalles del Pokémon:";
+            // 1. ID
+            const idElement = document.createElement("li");
+            idElement.textContent = "ID: " + resource.id;
+            listado.appendChild(idElement);
+            // 2. Nombre
+            const nameElement = document.createElement("li");
+            nameElement.textContent = "Nombre: " + resource.name;
+            listado.appendChild(nameElement);
+            // 3. Experiencia base
+            const experienceElement = document.createElement("li");
+            experienceElement.textContent = "Experiencia base: " + resource.base_experience;
+            listado.appendChild(experienceElement);
+            // 4. Altura
+            const heightElement = document.createElement("li");
+            heightElement.textContent = "Altura: " + resource.height + " decimetros.";
+            listado.appendChild(heightElement);
+            // 5. Habilidades
+            listado.appendChild(createSection("Habilidades: ", mapArrayElement(resource.abilities, "ability")));
+            // 6. Objetos que carga
+            let items = resource.held_items.length > 0 ? mapArrayElement(resource.held_items, "item") : ["No trae objetos equipados."];
+            listado.appendChild(createSection("Objetos que carga: ", items));
+
+            divTexto.appendChild(listado);
+            break;
+        }
         case 1:
-            listado.textContent = "Listado de Pokémon:"
-            pokemon.results.forEach(poke => {
+        case 4:
+        case 5:
+        case 6: {
+            switch (type) {
+                case 1:
+                    listado.textContent = "Lista de Pokémon:"
+                    break;
+                case 4:
+                    listado.textContent = "Lista de Habilidades:"
+                    break;
+                case 5:
+                    listado.textContent = "Lista de Habilidades (siguientes 20):"
+                    break;
+                case 6:
+                    listado.textContent = "Lista de Pokémon (siguientes 20):"
+                    break;
+            }
+            resource.results.forEach(poke => {
                 const infoElement = document.createElement("li");
                 infoElement.textContent = poke.name;
                 listado.appendChild(infoElement);
             });
             divTexto.appendChild(listado);
             break;
-        case 2:
-            listado.textContent = `Pokémon con ID ${pokemon.id}:`;
-            // 1. Nombre
-            const nameElement = document.createElement("li");
-            nameElement.textContent = "Nombre: " + pokemon.name;
-            listado.appendChild(nameElement);
-            // 2. Experiencia base
-            const experienceElement = document.createElement("li");
-            experienceElement.textContent = "Experiencia base: " + pokemon.base_experience;
-            listado.appendChild(experienceElement);
-            // 3. Altura
-            const heightElement = document.createElement("li");
-            heightElement.textContent = "Altura: " + pokemon.height + " decimetros.";
-            listado.appendChild(heightElement);
-            // 4. Habilidades
-            listado.appendChild(createSection("Habilidades: ", mapArrayElement(pokemon.abilities, "ability")));
-            // 5. Objetos que carga
-            listado.appendChild(createSection("Objetos que carga: ", mapArrayElement(pokemon.held_items, "item")));
-
-            divTexto.appendChild(listado);
-            break;
-        case 3:
-
-            break;
-        case 4:
-            break;
-        case 5:
-            break;
-        case 6:
-            break;
+        }
     }
 }
 
